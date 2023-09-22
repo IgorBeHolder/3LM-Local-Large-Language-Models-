@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Flask App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <style>
+        /* Define the style for the Sections column */
+        #sections {
+            background-color: black;
+            color: white;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 200px;
+            padding: 20px;
+        }
+
+        /* Define the style for the dynamic content area */
+        #content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+
+        /* Define the style for the user info area */
+        #user-info {
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 20px;
+        }
+
+        /* Define the style for the iframe */
+        iframe {
+            border: none;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="sections">
+        <h1>Sections</h1>
+        <ul>
+            <li><a href="/load-model" target="content">Load Model</a></li>
+            <li><a href="/inference" target="content">Inference</a></li>
+            <li><a href="/get-embeddings" target="content">Get Embeddings</a></li>
+            <li><a href="/upload-csv" target="content">Upload CSV</a></li>
+        </ul>
+    </div>
+    <div id="content">
+        <iframe name="content"></iframe>
+    </div>
+    <div id="user-info">
+        <p>Welcome, {{ current_user }}</p>
+    </div>
+</body>
+</html>
