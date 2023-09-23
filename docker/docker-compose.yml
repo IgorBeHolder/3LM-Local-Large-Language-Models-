@@ -1,0 +1,67 @@
+# version: '3'
+
+# services:
+#   postgres:
+#     image: postgres
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data
+#     environment:
+#       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+#       POSTGRES_DB: flask_llm_db
+#     ports:
+#       - "5432:5432"
+#     # working_dir: /
+#     # command: [ 'python3', 'src/main.py' ]      
+
+# volumes:
+#   postgres_data:
+
+version: '3.8'
+
+services:
+  web:
+    build: #./web # assuming Dockerfile for Flask is in a 'web' directory
+      context: ..
+      dockerfile: ./docker/flask_dockerfile
+    container_name: flask_container
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${POSTGRES_PORT}/${POSTGRES_DB}
+      - FLASK_ENV=development
+    ports:
+      - "5001:5000"
+    depends_on:
+      - db
+    networks:
+      - flask_postgres_network
+
+  db:
+    image: postgres
+    container_name: postgres_container
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - flask_postgres_network
+
+volumes:
+  postgres_data:
+
+networks:
+  flask_postgres_network:
+    driver: bridge
+
+
+# docker-compose up -d # -d for detached mode or
+# docker-compose up --build
+
+# docker-compose down
+
+# docker compose -p pg_container -f ./docker/docker-compose.yml up --build -d
+
+# --env-file .env # to use env file from root directory
+
