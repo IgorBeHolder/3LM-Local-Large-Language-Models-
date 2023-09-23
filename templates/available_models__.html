@@ -19,25 +19,26 @@
     </form>
 
     <h3>Available Models</h3>
-    <table border="1">
+    <table>
         <thead>
             <tr>
-                <th>Model ID</th>
-                <th>Name</th>
+                <th>Model Name</th>
                 <th>Uploaded On</th>
-                <!-- You can add more columns for other attributes of the MLModel -->
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for model in models %}
             <tr>
-                <td>{{ model.model_id }}</td>
                 <td>{{ model.name }}</td>
-                <td>{{ model.uploaded_on }}</td>
-                <!-- Render other attributes of the MLModel here -->
+                <td>{{ model.uploaded_on.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>
+                    <a href="{{ url_for('load_model', model_id=model.id) }}">Download</a> |
+                    <a href="{{ url_for('delete_model', model_id=model.id) }}">Delete</a> |
+                    <a href="{{ url_for('select_model', model_id=model.id) }}">Select</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    
 {% endblock %}

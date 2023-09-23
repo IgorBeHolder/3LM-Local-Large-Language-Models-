@@ -1,0 +1,39 @@
+/* Define the style for the Sections column */
+#sections {
+    background-color: black;
+    color: #d6d6d6;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 200px;
+    padding: 20px;
+}
+
+#sections a {
+    color: lightgrey;
+    text-decoration: none; /* This removes the underline from the links */
+}
+
+#sections a:hover {
+    color: white; /* Change to any color you'd like for the hover effect */
+}
+
+/* Define the style for the dynamic content area */
+#content {
+    margin-left: 220px;
+    padding: 20px;
+    background-color: #d6d6d6;
+}
+
+/* Define the style for the user info area */
+#user-info {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 20px;
+}
+
+body {
+    background-color: #d6d6d6; 
+}

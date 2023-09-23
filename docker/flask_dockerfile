@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY dev.txt /app/
 RUN pip install --upgrade pip \
     && pip install --no-cache-dir -r dev.txt
+    # && pip install --no-cache-dir -r dev.txt
 
 # Copy the current directory contents into the container at /app
 COPY . /app/
