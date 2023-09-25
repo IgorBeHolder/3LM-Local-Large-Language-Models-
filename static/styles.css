@@ -1,32 +1,41 @@
-/* Define the style for the Sections column */
+/* === Global Styles === */
+/* Include the font */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #d6d6d6; 
+}
+
+/* === Sections Column Styles === */
 #sections {
-    background-color: black;
+    background-color: rgb(28, 28, 28);
     color: #d6d6d6;
     height: 100%;
     position: fixed;
     left: 0;
     top: 0;
-    width: 200px;
+    width: 130px;
     padding: 20px;
 }
 
 #sections a {
     color: lightgrey;
-    text-decoration: none; /* This removes the underline from the links */
+    text-decoration: none; 
 }
 
 #sections a:hover {
-    color: white; /* Change to any color you'd like for the hover effect */
+    color: white; 
 }
 
-/* Define the style for the dynamic content area */
+/* === Content Styles === */
 #content {
-    margin-left: 220px;
+    margin-left: 160px;
     padding: 20px;
     background-color: #d6d6d6;
 }
 
-/* Define the style for the user info area */
+/* === User Info Styles === */
 #user-info {
     position: fixed;
     top: 0;
@@ -34,6 +43,19 @@
     padding: 20px;
 }
 
-body {
-    background-color: #d6d6d6; 
+#flash-messages {
+    position: absolute;   /* or relative, depending on your layout */
+    color: #5a5a5a;
+    bottom: 18px;            /* adjust as needed */
+    left: 180px;          /* adjust as needed */
+    z-index: 10;          /* ensures the flash messages are above other elements */
+}
+
+#active-model-status, #user-info {
+    display: inline-block;
+    margin-right: 15px;  /* adjust this value as needed */
+}
+
+.active-model-display {
+    color: rgb(30, 97, 30);
 }

@@ -7,7 +7,9 @@ services:
       dockerfile: ./docker/flask_dockerfile
     container_name: flask_container
     environment:
-      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${POSTGRES_PORT}/${POSTGRES_DB}
+      # - DATABASE_URI=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${POSTGRES_PORT}/${POSTGRES_DB}
+      - DATABASE_URL=${DATABASE_URL}
+      # db is the name of the service in docker-compose.yml
       - FLASK_ENV=development
     ports:
       - "5001:5000"
@@ -15,6 +17,12 @@ services:
       - db
     networks:
       - flask_postgres_network
+    volumes:
+        - ../models:/app/models 
+        - ../uploads:/app/uploads 
+        - ../static:/app/static
+        - ../templates:/app/templates 
+        - ../routes:/app/routes
 
   db:
     image: postgres

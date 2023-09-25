@@ -4,7 +4,7 @@
     <h2>Load Model</h2>
 
     <h3>Upload New Model</h3>
-    <form action="{{ url_for('load_model') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ url_for('models.load_model') }}" method="post" enctype="multipart/form-data">
         <label for="model_file">Upload Model:</label>
         <input type="file" name="model_file" required><br>
 
@@ -19,25 +19,47 @@
     </form>
 
     <h3>Available Models</h3>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Model ID</th>
-                <th>Name</th>
-                <th>Uploaded On</th>
-                <!-- You can add more columns for other attributes of the MLModel -->
-            </tr>
-        </thead>
-        <tbody>
-            {% for model in models %}
-            <tr>
-                <td>{{ model.model_id }}</td>
-                <td>{{ model.name }}</td>
-                <td>{{ model.uploaded_on }}</td>
-                <!-- Render other attributes of the MLModel here -->
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <form action="{{ url_for('models.manage_model') }}" method="post">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Select</th> <!-- New column for checkboxes -->
+                    <th>Model ID</th>
+                    <th>Name</th>
+                    <th>Uploaded On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for model in models %}
+                <tr>
+                    <td><input type="checkbox" name="selected_model" value="{{ model.model_id }}" onchange="updateButtonStatus()"></td>
+                    <td>{{ model.model_id }}</td>
+                    <td>{{ model.name }}</td>
+                    <td>{{ model.uploaded_on }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     
+        <!-- Buttons to manage selected models -->
+        <input type="submit" name="action" value="Delete" disabled>
+        <input type="submit" name="action" value="Activate" disabled>
+    </form>
+    
+    <script>
+        function updateButtonStatus() {
+            let checkboxes = document.querySelectorAll('input[name="selected_model"]:checked');
+            let deleteBtn = document.querySelector('input[name="action"][value="Delete"]');
+            let activateBtn = document.querySelector('input[name="action"][value="Activate"]');
+            
+            if (checkboxes.length === 1) {
+                deleteBtn.removeAttribute('disabled');
+                activateBtn.removeAttribute('disabled');
+            } else {
+                deleteBtn.setAttribute('disabled', 'true');
+                activateBtn.setAttribute('disabled', 'true');
+            }
+        }
+    </script>
+
 {% endblock %}

@@ -2,8 +2,36 @@
 
 {% block content %}
     <h2>Upload CSV</h2>
+    
+    <!-- Upload CSV Form -->
     <form action="{{ url_for('upload_csv') }}" method="post" enctype="multipart/form-data">
         <input type="file" name="csv_file">
         <input type="submit" value="Upload CSV">
     </form>
+
+    <h3>Available CSV Files</h3>
+    <form action="{{ url_for('manage_csv') }}" method="post">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Select</th> <!-- New column for checkboxes -->
+                    <th>File Name</th>
+                    <th>Uploaded On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for csv in csv_files %}
+                <tr>
+                    <td><input type="checkbox" name="selected_csv" value="{{ csv.name }}"></td>
+                    <td>{{ csv.name }}</td>
+                    <td>{{ csv.uploaded_on }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Button to delete selected CSVs -->
+        <input type="submit" name="action" value="Delete">
+    </form>
 {% endblock %}
+

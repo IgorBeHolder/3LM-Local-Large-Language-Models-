@@ -3,19 +3,47 @@
 {% block content %}
     <h2>Chat Window</h2>
 
-    <div id="chat-history" style="border: 1px solid grey; height: 400px; overflow-y: scroll; padding: 10px;">
+    <div id="chat-history" style="border: 1px solid grey; height: 400px; overflow-y: scroll; padding: 10px; border-radius: 10px;">
         <!-- Chat messages will be added here using JavaScript -->
     </div>
 
     <form id="chat-form" action="{{ url_for('chat') }}" method="post">
-        <textarea name="user_input" placeholder="Type your message..." rows="3" style="width: 100%; margin-top: 10px;"></textarea>
-        <input type="submit" value="Send">
+        <textarea name="user_input" placeholder="Type your message..." rows="3" style="width: 100%; margin-top: 10px; border-radius: 5px; border: 1px solid grey; resize: none; padding: 10px;"></textarea>
+        <input type="submit" value="Send" style="background-color: #007BFF; color: white; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer; margin-top: 10px;">
     </form>
 
     <script>
-        // Here, you can add JavaScript code to handle form submissions via AJAX, 
-        // append the user's prompt and model's completion to the chat history,
-        // and update the chat history div.
-    </script>
-{% endblock %}
+        document.getElementById("chat-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // prevent page reload
 
+            let userMessage = event.target.user_input.value;
+
+            // Append user's message to chat history
+            let userBubble = document.createElement("div");
+            userBubble.textContent = userMessage;
+            userBubble.style.backgroundColor = "#007BFF";
+            userBubble.style.color = "white";
+            userBubble.style.borderRadius = "5px";
+            userBubble.style.padding = "10px";
+            userBubble.style.marginBottom = "10px";
+            document.getElementById("chat-history").appendChild(userBubble);
+
+            // Scroll to the bottom of the chat history
+            let chatHistory = document.getElementById("chat-history");
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+
+            // TODO: Send the user's message to the backend using fetch or AJAX
+            // Then receive the response and append it to the chat-history like above
+            // but with a different bubble style.
+
+            // Clear the input field after sending
+            event.target.user_input.value = "";
+        });
+    </script>
+    <style>
+        #chat-form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script src="{{ url_for('static', filename='chat.js') }}"></script>
+{% endblock %}
