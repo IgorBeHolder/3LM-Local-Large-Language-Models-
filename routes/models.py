@@ -1,9 +1,9 @@
 import os
-from flask import Blueprint,session,render_template,redirect,url_for,request,flash
-from routes.database import db, User, MLModel
-from datetime import datetime
+from flask import Blueprint, session, render_template, redirect, url_for, request, flash
+from routes.database import db, MLModel
 
-models = Blueprint('models', __name__)
+
+models = Blueprint("models", __name__)
 
 
 @models.route("/load-model", methods=["GET", "POST"])
@@ -50,10 +50,12 @@ def manage_model():
             if model:
                 db.session.delete(model)
                 # Also delete the file from the file system if you want
-                os.remove(model.path)
+                if os.path.exists(model.path):
+                   os.remove(model.path)
 
         db.session.commit()
         flash("Selected models have been deleted.", "success")
+        session["active_model"] = 'No model selected '
 
     elif action == "Activate":
         # check if a model is selected
@@ -62,7 +64,7 @@ def manage_model():
                 0
             ]  # assuming only one model can be activated at once
             model = MLModel.query.get(int(model_id))
-        # For the sake of this example, let's just print out the selected models.
+            # For the sake of this example, let's just print out the selected models.
             if model:
                 # Here, let's say the 'load_ml_model' function loads your ML model from its path
                 # load_ml_model(model.path)
@@ -71,9 +73,7 @@ def manage_model():
                 session["active_model"] = model.name
                 flash(f"Model {model.name} has been activated.", "success")
 
-        # for model_id in selected_models:
-        #     print(f"Model with ID {model_id} is activated!")
-        # flash("Selected models have been activated.", "success")
+
 
     return redirect(url_for("models.load_model"))
 
@@ -82,4 +82,3 @@ def manage_model():
 def inject_active_model():
     """Injects the active model's name into the Jinja template"""
     return {"active_model": session.get("active_model")}
-
