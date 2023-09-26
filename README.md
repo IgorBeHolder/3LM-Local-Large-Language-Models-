@@ -15,8 +15,8 @@ A template for an MVP integrating Flask and OpenLLM.
 ## Setup
 1. Create a virtual environment: `python3 -m venv venv`
 2. Activate it: `source venv/bin/activate` (on Linux/Mac) or `venv\Scripts\activate` (on Windows)
-3. Install requirements: `pip install -r requirements.txt`
-4. Run the app: `python app.py`
+(3. Install requirements: `pip install -r dev.txt`)
+4. Run the app: `docker compose -p postgres_container -f ./docker/docker-compose.yml up --build`
 
 ## Features
 - [ ] Model loading and management with OpenLLM.
