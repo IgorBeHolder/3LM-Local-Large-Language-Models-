@@ -15,9 +15,9 @@
                 <li><a href="{{ url_for('chat.chats') }}">Chat</a></li>            
             {% elif current_user.role in ['admin', 'manager'] %}
                 <li><a href="{{ url_for('chat.chats') }}">Chat</a></li>
-                <li><a href="{{ url_for('models.load_model') }}">Load Model</a></li>
-                <li><a href="{{ url_for('upload_csv.upload_csv') }}">Upload CSV</a></li>
-
+                <li><a href="{{ url_for('models.load_model') }}">Models</a></li>
+                <li><a href="{{ url_for('upload_csv.upload_csv') }}">Upload file</a></li>
+                <li><a href="{{ url_for('upload_csv.upload_csv') }}">Get embedding</a></li>
 
 
             {% endif %}            

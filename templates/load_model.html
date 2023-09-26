@@ -25,7 +25,7 @@
                 <tr>
                     <th> </th>
                     <th>Model ID</th>
-                    <th>Name</th>
+                    <th>Model name</th>
                     <th>Uploaded On</th>
                     <th>Predefined</th>
                 </tr>
@@ -35,12 +35,12 @@
                 <tr>
                     <td>
                         <!-- Checkbox with data-predefined attribute -->
-                        <input type="checkbox" name="selected_model" value="{{ model.model_id }}" data-predefined="{{ model.is_predefined }}" onchange="updateButtonStatus()">
+                        <input type="checkbox" name="selected_model" value="{{ model.model_id }}" data-predefined="{{ 'Yes' if model.predefined == 1 else 'No' }}" onchange="updateButtonStatus()">
                     </td>
                     <td>{{ model.model_id }}</td>
                     <td>{{ model.name }}</td>
                     <td>{{ model.uploaded_on }}</td>
-                    <td>{{ 'Yes' if model.is_predefined else 'No' }}</td>
+                    <td>{{ 'Yes' if model.predefined == 1 else 'No' }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -58,7 +58,7 @@
             let activateBtn = document.querySelector('input[name="action"][value="Activate"]');
             
             if (checkboxes.length === 1) {
-                let isPredefined = checkboxes[0].getAttribute('data-predefined') === 'True';
+                let isPredefined = checkboxes[0].getAttribute('data-predefined') == 'Yes';
 
                 if (isPredefined) {
                     deleteBtn.setAttribute('disabled', 'true');

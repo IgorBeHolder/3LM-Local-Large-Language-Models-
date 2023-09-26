@@ -25,3 +25,4 @@ class MLModel(db.Model):
     name = db.Column(db.String(80), unique=True, nullable=False)
     path = db.Column(db.String(120), nullable=False)
     uploaded_on = db.Column(db.DateTime, default=datetime.utcnow)
+    predefined = db.Column(db.Integer, default=0)

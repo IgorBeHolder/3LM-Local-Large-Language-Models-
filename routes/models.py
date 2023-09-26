@@ -32,14 +32,8 @@ def load_model():
         # Flash a success message
         flash("Model uploaded successfully to {}!".format(selected_catalog), "success")
 
-        # return redirect(url_for(""))
 
-        # Redirect to the load_model route
-    models = [
-    {"model_id": 1, "name": "Bert", "uploaded_on": "2023.01.01", "is_predefined": True},
-    # ... other models
-    ]
-    uploaded_models = models + MLModel.query.all()
+    uploaded_models = MLModel.query.all()
     return render_template("load_model.html", models=uploaded_models)
 
 
@@ -67,7 +61,7 @@ def manage_model():
             model_id = selected_models[
                 0
             ]  # assuming only one model can be activated at once
-            session["active_model"] = selected_models   # ------------------------------------------- remove
+            # session["active_model"] = selected_models   # ------------------------------------------- remove
 
             model = MLModel.query.get(int(model_id))
             # For the sake of this example, let's just print out the selected models.
