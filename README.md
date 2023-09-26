@@ -28,4 +28,3 @@ A template for an MVP integrating Flask and OpenLLM.
 curl https://api.openai.com/v1/models   -H "Authorization: Bearer $(grep OPENAI_API_KEY .env | cut -d= -f2)" > models.txt
 ```  
 
-The result is saved to models.txt
