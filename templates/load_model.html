@@ -23,19 +23,24 @@
         <table border="1">
             <thead>
                 <tr>
-                    <th>Select</th> <!-- New column for checkboxes -->
+                    <th> </th>
                     <th>Model ID</th>
                     <th>Name</th>
                     <th>Uploaded On</th>
+                    <th>Predefined</th>
                 </tr>
             </thead>
             <tbody>
                 {% for model in models %}
                 <tr>
-                    <td><input type="checkbox" name="selected_model" value="{{ model.model_id }}" onchange="updateButtonStatus()"></td>
+                    <td>
+                        <!-- Checkbox with data-predefined attribute -->
+                        <input type="checkbox" name="selected_model" value="{{ model.model_id }}" data-predefined="{{ model.is_predefined }}" onchange="updateButtonStatus()">
+                    </td>
                     <td>{{ model.model_id }}</td>
                     <td>{{ model.name }}</td>
                     <td>{{ model.uploaded_on }}</td>
+                    <td>{{ 'Yes' if model.is_predefined else 'No' }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -53,13 +58,25 @@
             let activateBtn = document.querySelector('input[name="action"][value="Activate"]');
             
             if (checkboxes.length === 1) {
-                deleteBtn.removeAttribute('disabled');
-                activateBtn.removeAttribute('disabled');
+                let isPredefined = checkboxes[0].getAttribute('data-predefined') === 'True';
+
+                if (isPredefined) {
+                    deleteBtn.setAttribute('disabled', 'true');
+                    activateBtn.removeAttribute('disabled');
+                } else {
+                    deleteBtn.removeAttribute('disabled');
+                    activateBtn.removeAttribute('disabled');
+                }
             } else {
                 deleteBtn.setAttribute('disabled', 'true');
                 activateBtn.setAttribute('disabled', 'true');
             }
         }
+    
+        // Call the function immediately when the page loads
+        document.addEventListener("DOMContentLoaded", function() {
+            updateButtonStatus();
+        });
     </script>
 
 {% endblock %}
